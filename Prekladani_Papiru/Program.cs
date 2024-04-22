@@ -21,6 +21,7 @@
                     Console.WriteLine("Vzálenost k měsíci je: {0} km", vzdalenostKMesici / 1000);
                     Console.ResetColor();
 
+
                     // cyklus pro určení počtu přeložení, cyklus bude fungovat tak dlouho dokud tloustka papíru nebude větší než vzdálenost k měsíci
                     while (tloustkaPapiru < vzdalenostKMesici && pocetSlozeni < 32)
                     {
@@ -29,14 +30,16 @@
                         Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Aktuální tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000);
 
+
                         tloustkaPapiru *= 2; // 1 přeložení papíru
                         pocetSlozeni++; // přičtení dalšího ohybu
 
-                        // Progress bar
+
+                        // progress bar
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("");
                         Console.WriteLine("Aktuální vzádelnost:");
-                        Console.Write(string.Join("", progressBar).PadRight(32, '▒'));
+                        Console.Write(string.Join("", progressBar).PadRight(31, '▒')); // výměna invisible symbolů za black symboly
                         Console.WriteLine("\n");
                         Console.ResetColor();
 
@@ -44,7 +47,7 @@
                         Console.ForegroundColor = ConsoleColor.Gray;
                         if (pocetSlozeni < 32)
                         {
-                        progressBar.Add("█");
+                        progressBar.Add("█"); // pridavani symbolu do progress baru
                         Console.WriteLine("Klikněte pro další přeložení papíru");
                         Console.ReadKey();
                         }
