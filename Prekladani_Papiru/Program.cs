@@ -13,8 +13,8 @@
                     Console.WriteLine("Vítejte v programu pro určení počtu přeložení papíru k Měsíci");
 
                     // Definování základních parametrů
-                    double tloustkaPapiru = 0.1; // Tloušťka v milimetrech
-                    double vzdalenostKMesici = 384400 * 1000; // Převod kilometrů na milimetry
+                    decimal tloustkaPapiru = 0.1m; // Tloušťka v milimetrech
+                    decimal vzdalenostKMesici = 384400m * 1000000m; // Převod kilometrů na milimetry
                     int pocetSlozeni = 0; // Aktuální počet složení
                 
                     // Standardní rozměry papíru
@@ -29,7 +29,7 @@
 
 
                     // Cyklus pro určení počtu přeložení, cyklus bude fungovat tak dlouho dokud tloustka papíru nebude větší než vzdálenost k měsíci
-                    while (tloustkaPapiru < vzdalenostKMesici && pocetSlozeni < 32)
+                    while (tloustkaPapiru < vzdalenostKMesici)
                     {
                         if (pocetSlozeni % 2 == 1 && pocetSlozeni != 0) // Každé liché číslo se přeloží papír na délku kromě nuly
                         {
@@ -65,13 +65,13 @@
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("");
                         Console.WriteLine("Aktuální vzádelnost:");
-                        Console.Write(string.Join("", progressBar).PadRight(31, '▒')); // Výměna invisible symbolů za black symboly
+                        Console.Write(string.Join("", progressBar).PadRight(41, '▒')); // Výměna invisible symbolů za black symboly
                         Console.WriteLine("\n");
                         Console.ResetColor();
 
 
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        if (pocetSlozeni <= 32) // Vypisování čteverčků do progress baru
+                        if (pocetSlozeni <= 42) // Vypisování čteverčků do progress baru
                         {
                             progressBar.Add("█"); // Přidávání symbolů do listu progress baru
                             Console.WriteLine("Klikněte pro další přeložení papíru");
@@ -82,14 +82,14 @@
                     }
 
 
-                    int konvertovaniTloustky = Convert.ToInt32(tloustkaPapiru);
+                    //int konvertovaniTloustky = Convert.ToInt32(tloustkaPapiru);
 
 
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Počet složení potřebných k dosažení Měsíce: {0}", pocetSlozeni);
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", konvertovaniTloustky, konvertovaniTloustky / 1000); // Převod z mm na km
+                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000000); // Převod z mm na km
 
                     Console.ResetColor();
                     Console.BackgroundColor = ConsoleColor.Blue;
