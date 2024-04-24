@@ -12,74 +12,125 @@
                 {
                     Console.WriteLine("Vítejte v programu pro určení počtu přeložení papíru k Měsíci");
 
-                    double tloustkaPapiru = 0.1; // tloušťka v milimetrech
-                    double vzdalenostKMesici = 384400 * 1000; // převod kilometrů na milimetry
-                    int pocetSlozeni = 0; // aktuální počet složení
+                    // Definování základních parametrů
+                    double tloustkaPapiru = 0.1; // Tloušťka v milimetrech
+                    double vzdalenostKMesici = 384400 * 1000; // Převod kilometrů na milimetry
+                    int pocetSlozeni = 0; // Aktuální počet složení
+                
+                    // Standardní rozměry papíru
+                    double delkaPapiruA0 = 1189;
+                    double sirkaPapiruA0 = 841;
+                    double delkaPapiruA4 = 297;
+                    double sirkaPapiruA4 = 210;
+
+
+                    // Progress bar v Listu znaků
                     List<string> progressBar = new List<string>();
 
-                    Console.ForegroundColor = ConsoleColor.DarkBlue;
-                    Console.WriteLine("Vzálenost k měsíci je: {0} km", vzdalenostKMesici / 1000);
-                    Console.ResetColor();
 
-
-                    // cyklus pro určení počtu přeložení, cyklus bude fungovat tak dlouho dokud tloustka papíru nebude větší než vzdálenost k měsíci
+                    // Cyklus pro určení počtu přeložení, cyklus bude fungovat tak dlouho dokud tloustka papíru nebude větší než vzdálenost k měsíci
                     while (tloustkaPapiru < vzdalenostKMesici && pocetSlozeni < 32)
                     {
+                        if (pocetSlozeni % 2 == 1 && pocetSlozeni != 0) // Každé liché číslo se přeloží papír na délku kromě nuly
+                        {
+                            delkaPapiruA4 /= 2;
+                            delkaPapiruA0 /= 2;
+                        }
+                        else if (pocetSlozeni % 2 == 0 && pocetSlozeni != 0) // Každé sudé číslo se přeloží papír na šířku kromě nuly 
+                        {
+                            sirkaPapiruA4 /= 2;
+                            sirkaPapiruA0 /= 2;
+                        }
+
+
+                        // Logování parametrů do console
+                        Console.WriteLine("Delká papíru A0 {0} mm", delkaPapiruA0);
+                        Console.WriteLine("Šířka papíru A0 {0} mm", sirkaPapiruA0);
+                        Console.WriteLine("Delká papíru A4 {0} mm", delkaPapiruA4);
+                        Console.WriteLine("Šířka papíru A4 {0} mm", sirkaPapiruA4);
                         Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine("Aktuální počet přeložení: {0}", pocetSlozeni);
+                        Console.WriteLine("\nAktuální počet přeložení: {0}", pocetSlozeni);
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Aktuální tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000);
+                        Console.WriteLine("Aktuální tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000); // Tlouštka papiru zaokrouhlena na km 
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("Vzálenost k měsíci je: {0} km", vzdalenostKMesici / 1000);
+                        Console.ResetColor();
 
 
                         tloustkaPapiru *= 2; // 1 přeložení papíru
                         pocetSlozeni++; // přičtení dalšího ohybu
 
 
-                        // progress bar
+                        // Progress bar logika
                         Console.ForegroundColor = ConsoleColor.Cyan;
                         Console.WriteLine("");
                         Console.WriteLine("Aktuální vzádelnost:");
-                        Console.Write(string.Join("", progressBar).PadRight(31, '▒')); // výměna invisible symbolů za black symboly
+                        Console.Write(string.Join("", progressBar).PadRight(31, '▒')); // Výměna invisible symbolů za black symboly
                         Console.WriteLine("\n");
                         Console.ResetColor();
 
 
                         Console.ForegroundColor = ConsoleColor.Gray;
-                        if (pocetSlozeni < 32)
+                        if (pocetSlozeni <= 32) // Vypisování čteverčků do progress baru
                         {
-                        progressBar.Add("█"); // pridavani symbolu do progress baru
-                        Console.WriteLine("Klikněte pro další přeložení papíru");
-                        Console.ReadKey();
+                            progressBar.Add("█"); // Přidávání symbolů do listu progress baru
+                            Console.WriteLine("Klikněte pro další přeložení papíru");
+                            Console.ReadKey();
                         }
+
                         Console.Clear();
                     }
 
-                    Console.ResetColor();
 
+                    int konvertovaniTloustky = Convert.ToInt32(tloustkaPapiru);
+
+
+                    Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Počet složení potřebných k dosažení Měsíce: {0}", pocetSlozeni);
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000);
-                    Console.WriteLine();
+                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", konvertovaniTloustky, konvertovaniTloustky / 1000); // Převod z mm na km
 
                     Console.ResetColor();
-                    Console.WriteLine("Děkujeme za použití programu");
+                    Console.BackgroundColor = ConsoleColor.Blue;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine();
 
-                    Console.WriteLine("Chcete ukončit program? (y/n)");
+                    double zaokrouhleneCisloA4sirka = Math.Round(sirkaPapiruA4, 4);  // Zaokrouhlení čísel pomocí knihovny Math.Round, čísla jsou zaokrouhleny na desetitisíciny
+                    double zaokrouhleneCisloA4delka = Math.Round(delkaPapiruA4, 4);
+                    double zaokrouhleneCisloA0sirka = Math.Round(sirkaPapiruA0, 4);
+                    double zaokrouhleneCisloA0delka = Math.Round(delkaPapiruA0, 4);
+
+
+                    // Finální result
+                    Console.WriteLine(
+                        "Výsledek ukazuje že je nereálné abychom byli schopni přeložit papír A4 do rozměrů {0:0.0000} x {1:0.0000} nebo největší papír který se vyrábí A0 do rozměrů {2:0.0000} x {3:0.0000}",
+                        zaokrouhleneCisloA4sirka, zaokrouhleneCisloA4delka, zaokrouhleneCisloA0sirka, zaokrouhleneCisloA0delka);
+                    Console.WriteLine(
+                        "\nPS. čísla byla zaokrouhlena na desetitisíciny abyste z toho aspoň něco vyčetli, jak můžeme vidět čísla by dosahovala microskopických rozměrů, což bychom ani s nejpokročilejšími technologiemi dnešní doby nezvládli přeložit.");
+                    Console.ResetColor();
+                    Console.WriteLine("\nDěkujeme za použití programu");
+
+                    Console.WriteLine("Chcete zapnout program znovu? (a/n)");
+
+
+                    // Switch pro pokračování nebo ukončení aplikace
                     char pokracovat = Convert.ToChar(Console.ReadLine());
-                    if (pokracovat == 'n')
+                    switch (pokracovat)
                     {
-                        pokracovani = true;
-                        Console.Clear();
+                        case 'a':
+                            pokracovani = true;
+                            Console.Clear();
+                            break;
+                        case 'n':
+                            pokracovani = false;
+                            break;
+                        default:
+                            Console.WriteLine("Neplatný znak, program je ukončen.");
+                            return;
                     }
-                    else if (pokracovat == 'y')
-                    {
-                        pokracovani = false;
-                    }
-
                 } while (pokracovani == true);
                 Console.ReadLine();
-
             }
         }
     }
