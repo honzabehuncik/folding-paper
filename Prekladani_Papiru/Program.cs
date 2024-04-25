@@ -51,7 +51,7 @@
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\nAktuální počet přeložení: {0}", pocetSlozeni);
                         Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("Aktuální tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000); // Tlouštka papiru zaokrouhlena na km 
+                        Console.WriteLine("Aktuální tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000); // Tlouštka papíru zaokrouhlena na km 
                         Console.ForegroundColor = ConsoleColor.Blue;
                         Console.WriteLine("Vzálenost k měsíci je: {0} km", vzdalenostKMesici / 1000);
                         Console.ResetColor();
@@ -81,15 +81,14 @@
                         Console.Clear();
                     }
 
-
-                    //int konvertovaniTloustky = Convert.ToInt32(tloustkaPapiru);
-
-
+                    // Převedení desetinného čísla na celé číslo
+                    long konvertovaniTloustkyPapiru = decimal.ToInt64(tloustkaPapiru);
+                    
                     Console.ResetColor();
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Počet složení potřebných k dosažení Měsíce: {0}", pocetSlozeni);
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", tloustkaPapiru, tloustkaPapiru / 1000000); // Převod z mm na km
+                    Console.WriteLine("Celková tloušťka papíru: {0} mm nebo {1} km", konvertovaniTloustkyPapiru, konvertovaniTloustkyPapiru / 1000000); // Převod z mm na km
 
                     Console.ResetColor();
                     Console.BackgroundColor = ConsoleColor.Blue;
